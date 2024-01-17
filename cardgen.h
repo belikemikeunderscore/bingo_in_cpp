@@ -2,24 +2,57 @@
 #include <ctime>
 #include <fstream>
 #include <cmath>
+#include <filesystem>
+#include <algorithm>
 using namespace std;
+namespace fs = std::filesystem;
 
-int num[5][5];
-int rndm;
+const int rows = 5;
+const int cols = 5;
+const int gridSize = rows * cols;
+const string baseFileName = "cartao";
+int cardnumber;
 
-int gen(){
-srand((unsigned) time(0));
-rndm = rand() % 100;
-
-
-ofstream outputFile("cartão.txt");
-if (outputFile.is_open()) {
-    outputFile << rndm;
-    cout << "ficheiro cartão foi criado nesta pasta";
-    outputFile.close();
+void shuffleArray(int* arr, int size) {
+    random_shuffle(arr, arr + size);
 }
 
+int gen() {
+    srand(static_cast<unsigned>(time(0)));
 
-return 0;
-    
+    if (!fs::exists("Cartoes")) {
+        fs::create_directory("Cartoes");
+    }
+
+    cout << "Quantos cartões queres criar?";
+    cin >> cardnumber;
+
+    int numbers[gridSize];
+    for (int i = 0; i < gridSize; ++i) {
+        numbers[i] = i + 1;
+    }
+
+    for (int i = 1; i <= cardnumber; ++i) {
+        shuffleArray(numbers, gridSize);
+
+        stringstream fileNameStream;
+        fileNameStream << "Cartoes" << "/" << baseFileName << "_" << i << ".txt";
+        string fileName = fileNameStream.str();
+
+        ofstream outputFile(fileName);
+
+        if (outputFile.is_open()) {
+            for (int j = 0; j < gridSize; ++j) {
+                outputFile << numbers[j] << " ";
+                if ((j + 1) % cols == 0) { //this one was shamelessly made with gpt
+                    outputFile << endl; 
+                }
+            }
+
+            outputFile.close();
+        }
+    }
+
+    cout << "Os teus " << cardnumber << " cartões foram gerados na pasta Cartoes";
+
 }

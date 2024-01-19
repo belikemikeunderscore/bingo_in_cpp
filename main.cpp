@@ -1,4 +1,10 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <numeric>
+#include <limits>
 #include "cardgen.h"
 using namespace std;
 
@@ -9,6 +15,39 @@ int sorteados;
 int numeroSorteado;
 int anterior;
 int contador;
+
+void displayNumbers(const vector<int>& sortedNumbers) {
+
+    int totalNumbers = sortedNumbers.size();
+
+    int rows = totalNumbers / 5 + (totalNumbers % 5 != 0);
+
+    int cols = 5;
+
+
+    for (int row = 0; row < rows; ++row) {
+
+        for (int col = 0; col < cols; ++col) {
+
+            int index = row * cols + col;
+
+            if (index < totalNumbers) {
+
+                cout << setw(2) << sortedNumbers[index] << ' ';
+
+            } else {
+
+                cout << " ";
+
+            }
+
+        }
+
+        cout << endl;
+
+    }
+
+}
 
 int main(){
     srand(static_cast<unsigned>(time(0)));

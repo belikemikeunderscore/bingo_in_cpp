@@ -26,7 +26,7 @@ int gen() {
 
     cout << "Quantos cartões queres criar?";
     cin >> cardnumber;
-
+    system("clear");
     int numbers[gridSize];
     for (int i = 0; i < gridSize; ++i) {
         numbers[i] = i + 1;
@@ -44,7 +44,7 @@ int gen() {
         if (outputFile.is_open()) {
             for (int j = 0; j < gridSize; ++j) {
                 outputFile << numbers[j] << " ";
-                if ((j + 1) % cols == 0) { //this one was shamelessly made with gpt
+                if ((j + 1) % cols == 0) { //this one trick was shamelessly made with gpt
                     outputFile << endl; 
                 }
             }
@@ -53,6 +53,6 @@ int gen() {
         }
     }
 
-    cout << "Os teus " << cardnumber << " cartões foram gerados na pasta Cartoes";
+    cout << "Os teus " << cardnumber << " cartões foram gerados na pasta Cartoes.\n";
 
 }

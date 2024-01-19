@@ -1,26 +1,27 @@
 #include <iostream>
-#include "cardgen.h"
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <numeric>
+#include <limits>
 using namespace std;
 
-int selection;
-int amountDeNumerosSort;
-int poolselect;
-int sorteados;
-int numeroSorteado;
-int anterior;
-int contador;
+void displayNumbers(const vector<int>& sortedNumbers) {
+    cout << "Números sorteados:\n";
+    for (size_t i = 0; i < sortedNumbers.size(); ++i) {
+        cout << sortedNumbers[i] << "\t";
+        if ((i + 1) % 10 == 0) {
+            cout << endl;
+        }
+    }
+    cout << endl;
+}
 
-int main(){
+int main() {
     srand(static_cast<unsigned>(time(0)));
-    system("clear");
-    cout << "Bem vindo ao bingo!\n";
-    cout << "1) Jogar\n";
-    cout << "2) Gerar Cartões\n";
-    cin >> selection;
-    system("clear");
-        switch (selection){
-            case 1:
-                    int totalNumbers;
+
+    int totalNumbers;
     cout << "Escolha o tipo de sorteio:\n1) 75 números\n2) 90 números\n3) 100 números\n";
     int choice;
     cin >> choice;
@@ -59,9 +60,10 @@ int main(){
             sortedNumbers.push_back(drawnNumber);
             cout << "Número sorteado: " << drawnNumber << "\nNúmero anterior: " << previousNumber << endl;
         } else if (drawMode == 2) {
-            char manualDraw;
             cout << "Pressione qualquer tecla para sortear um novo número (ou 'q' para sair): ";
-            cin >> manualDraw;
+            char manualDraw;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.get(manualDraw);
 
             if (manualDraw == 'q' || manualDraw == 'Q') {
                 break;
@@ -80,12 +82,6 @@ int main(){
         previousNumber = sortedNumbers.back();
         displayNumbers(sortedNumbers);
     }
-                cout << "Penis 2";
-                break;
-            
 
-
-        } 
-    gen();
-
+    return 0;
 }
